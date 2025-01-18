@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Moje knihovna
+      Scanner
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,20 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Moje knihovna</ion-title>
+      <ion-title size="large">Scanner</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+      {{ scanResult }}
+      </ion-card-title>
+      <ion-card-subtitle>Scanned code:</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+  
+  <ion-button (click)="scanBarcode()" expand="block" class="ion-padding">Scan barcode</ion-button>
+  
 </ion-content>

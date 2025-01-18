@@ -1,12 +1,12 @@
 import { Component, runInInjectionContext } from '@angular/core';
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss'],
+  selector: 'app-tab3',
+  templateUrl: 'tab3.page.html',
+  styleUrls: ['tab3.page.scss'],
   standalone: false,
 })
-export class Tab1Page {
+export class Tab3Page {
 
   constructor() {}
 }
