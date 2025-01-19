@@ -1,5 +1,6 @@
-import { Component, runInInjectionContext } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -7,12 +8,21 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['tab1.page.scss'],
   standalone: false,
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit{
   searchTerm: string = '';
   books: any[] = [];
   isLoading: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params['isbn']) {
+        this.searchTerm = params['isbn'];
+        this.searchBooks();
+      }
+    });
+  }
 
   async searchBooks() {
     if (this.searchTerm) {

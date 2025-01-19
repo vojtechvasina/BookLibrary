@@ -13,16 +13,8 @@
     </ion-toolbar>
   </ion-header>
 
-  
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-      {{ scanResult }}
-      </ion-card-title>
-      <ion-card-subtitle>Scanned code:</ion-card-subtitle>
-    </ion-card-header>
-  </ion-card>
-  
-  <ion-button (click)="scanBarcode()" expand="block" class="ion-padding">Scan barcode</ion-button>
+  <ion-content [class.scanner-active]="true">
+    <div class="scan-box"></div>
+  </ion-content>
   
 </ion-content>

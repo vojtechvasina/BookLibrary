@@ -1,5 +1,6 @@
-import { Component, runInInjectionContext } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -7,22 +8,30 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
   styleUrls: ['tab2.page.scss'],
   standalone: false,
 })
-export class Tab2Page {
-  scanResult = '';
-  isScanning = false;
+export class Tab2Page implements OnInit {
+  constructor(private router: Router) {}
 
-  constructor() {}
+  ngOnInit() {
+    this.startScanner();
+  }
 
-  async scanBarcode() {
-    this.isScanning = true;
+  async startScanner() {
     const status = await BarcodeScanner.checkPermission({ force: true });
 
     if (status.granted) {
+      await BarcodeScanner.hideBackground();
       const result = await BarcodeScanner.startScan();
+      
       if (result.hasContent) {
-        this.scanResult = result.content;
+        this.router.navigate(['/tabs/tab1'], { 
+          queryParams: { isbn: result.content }
+        });
       }
     }
-    this.isScanning = false;
+  }
+
+  ionViewWillLeave() {
+    BarcodeScanner.showBackground();
+    BarcodeScanner.stopScan();
   }
 }
