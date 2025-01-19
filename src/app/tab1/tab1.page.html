@@ -34,6 +34,10 @@
         <h2>{{ book.title }}</h2>
         <h3>{{ book.author_name?.join(', ') }}</h3>
       </ion-label>
+      <ion-button slot="end" (click)="addToLibrary(book)">
+        <ion-icon name="add"></ion-icon>
+        Přidat
+      </ion-button>
     </ion-item>
   </ion-list>
 

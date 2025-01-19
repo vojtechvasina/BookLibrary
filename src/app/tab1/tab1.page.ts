@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-tab1',
@@ -13,7 +14,7 @@ export class Tab1Page implements OnInit{
   books: any[] = [];
   isLoading: boolean = false;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute, private storageService: StorageService) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -48,5 +49,9 @@ export class Tab1Page implements OnInit{
   onSearchChange(event: any) {
     this.searchTerm = event.detail.value;
     this.searchBooks();
+  }
+
+  async addToLibrary(book: any) {
+    await this.storageService.addBook(book);
   }
 }

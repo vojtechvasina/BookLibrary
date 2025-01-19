@@ -1,4 +1,5 @@
-import { Component, runInInjectionContext } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-tab3',
@@ -6,7 +7,27 @@ import { Component, runInInjectionContext } from '@angular/core';
   styleUrls: ['tab3.page.scss'],
   standalone: false,
 })
-export class Tab3Page {
+export class Tab3Page implements OnInit {
+  books: any[] = [];
 
-  constructor() {}
+  constructor(private storageService: StorageService) {}
+
+  async ngOnInit() {
+    await this.loadBooks();
+  }
+
+  async loadBooks() {
+    this.books = await this.storageService.getBooks();
+  }
+
+  async removeBook(bookId: string) {
+    await this.storageService.removeBook(bookId);
+    await this.loadBooks();
+  }
+
+  handleRefresh(event: CustomEvent) {
+    setTimeout(() => {
+      (event.target as HTMLIonRefresherElement).complete();
+    }, 2000);
+  }
 }
