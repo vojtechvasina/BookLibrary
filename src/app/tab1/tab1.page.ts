@@ -9,20 +9,40 @@ import { StorageService } from '../services/storage.service';
   styleUrls: ['tab1.page.scss'],
   standalone: false,
 })
-export class Tab1Page implements OnInit{
+export class Tab1Page implements OnInit {
   searchTerm: string = '';
   books: any[] = [];
   isLoading: boolean = false;
+  myLibraryBooks: any[] = []; // Přidáno pro sledování knih v knihovně
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private storageService: StorageService) {}
+  constructor(
+    private http: HttpClient, 
+    private route: ActivatedRoute, 
+    private storageService: StorageService
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (params['isbn']) {
         this.searchTerm = params['isbn'];
         this.searchBooks();
       }
     });
+    await this.loadLibraryBooks(); // Načti knihy při startu
+  }
+
+  // Nová metoda pro načtení knih z knihovny
+  async loadLibraryBooks() {
+    this.myLibraryBooks = await this.storageService.getBooks();
+    console.log('Knihy v knihovne:', this.myLibraryBooks);
+  }
+
+  // Nová metoda pro kontrolu, zda je kniha v knihovně
+  isBookInLibrary(book: any): boolean {
+    return this.myLibraryBooks.some(libraryBook => 
+      libraryBook.title === book.title && 
+      libraryBook.author_name?.[0] === book.author_name?.[0]
+    );
   }
 
   async searchBooks() {
@@ -30,10 +50,12 @@ export class Tab1Page implements OnInit{
       this.isLoading = true;
       try {
         const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(this.searchTerm)}&limit=10`;
-        
-        this.http.get(url).subscribe((data: any) => {
+
+        this.http.get(url).subscribe(async (data: any) => {
           this.books = data.docs || [];
           this.isLoading = false;
+          await this.loadLibraryBooks();
+          console.log('Vyhledane knihy:', this.books);
         });
       } catch (error) {
         console.error('Error fetching books:', error);
@@ -48,10 +70,14 @@ export class Tab1Page implements OnInit{
 
   onSearchChange(event: any) {
     this.searchTerm = event.detail.value;
-    this.searchBooks();
+    if (this.searchTerm.length > 2) { // Přidána podmínka minimální délky
+      this.searchBooks();
+    }
   }
 
   async addToLibrary(book: any) {
     await this.storageService.addBook(book);
+    await this.loadLibraryBooks();
+    console.log('Pridana kniha: ', book);
   }
 }

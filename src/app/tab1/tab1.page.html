@@ -34,10 +34,18 @@
         <h2>{{ book.title }}</h2>
         <h3>{{ book.author_name?.join(', ') }}</h3>
       </ion-label>
-      <ion-button slot="end" (click)="addToLibrary(book)">
+
+      <ion-button *ngIf="!isBookInLibrary(book)" slot="end" (click)="addToLibrary(book)">
         <ion-icon name="add"></ion-icon>
         Přidat
       </ion-button>
+      
+      <ion-card *ngIf="isBookInLibrary(book)" slot="end">
+        <ion-card-content>
+          <ion-icon name="checkmark-outline"></ion-icon>
+            Přidáno
+        </ion-card-content>
+      </ion-card>
     </ion-item>
   </ion-list>
 

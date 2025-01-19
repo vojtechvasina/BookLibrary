@@ -12,8 +12,12 @@ export class Tab3Page implements OnInit {
 
   constructor(private storageService: StorageService) {}
 
-  async ngOnInit() {
-    await this.loadBooks();
+  ngOnInit() {
+    this.loadBooks();
+  }
+
+  ionViewWillEnter() {
+    this.loadBooks();
   }
 
   async loadBooks() {
