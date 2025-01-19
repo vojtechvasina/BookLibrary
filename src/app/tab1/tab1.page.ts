@@ -18,10 +18,10 @@ export class Tab1Page {
     if (this.searchTerm) {
       this.isLoading = true;
       try {
-        const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(this.searchTerm)}&maxResults=10`;
+        const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(this.searchTerm)}&limit=10`;
         
         this.http.get(url).subscribe((data: any) => {
-          this.books = data.items || [];
+          this.books = data.docs || [];
           this.isLoading = false;
         });
       } catch (error) {
@@ -31,7 +31,10 @@ export class Tab1Page {
     }
   }
 
-  // Můžeš přidat metodu pro vyhledávání při psaní
+  getBookCover(coverId: string) {
+    return `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`;
+  }
+
   onSearchChange(event: any) {
     this.searchTerm = event.detail.value;
     this.searchBooks();
