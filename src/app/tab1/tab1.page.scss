@@ -1,3 +1,10 @@
 .search-bar {
     padding: 8px;
 }
+
+ion-thumbnail {
+    --size: 80px;
+    img {
+      border-radius: 8px;
+    }
+  }

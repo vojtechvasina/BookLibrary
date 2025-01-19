@@ -15,10 +15,26 @@
   
   <ion-input
     class="search-bar"
+    [(ngModel)]="searchTerm"
+    (ionChange)="onSearchChange($event)"
     label="Vyhledávání" 
     label-placement="floating" 
     fill="outline"
-    placeholder="Zadejte název, autora nebo ISBN">
+    placeholder="Zadejte název knihy, autora nebo ISBN">
   </ion-input>
+
+  <ion-progress-bar type="indeterminate" *ngIf="isLoading"></ion-progress-bar>
+
+  <ion-list>
+    <ion-item *ngFor="let book of books">
+      <ion-thumbnail slot="start">
+        <img [src]="book.volumeInfo.imageLinks?.thumbnail" alt="Book cover">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ book.volumeInfo.title }}</h2>
+        <h3>{{ book.volumeInfo.authors?.join(', ') }}</h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 
 </ion-content>
