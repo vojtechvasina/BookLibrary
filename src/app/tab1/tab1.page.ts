@@ -13,7 +13,7 @@ export class Tab1Page implements OnInit {
   searchTerm: string = '';
   books: any[] = [];
   isLoading: boolean = false;
-  myLibraryBooks: any[] = []; // Přidáno pro sledování knih v knihovně
+  myLibraryBooks: any[] = [];
 
   constructor(
     private http: HttpClient, 
@@ -28,16 +28,14 @@ export class Tab1Page implements OnInit {
         this.searchBooks();
       }
     });
-    await this.loadLibraryBooks(); // Načti knihy při startu
+    await this.loadLibraryBooks();
   }
 
-  // Nová metoda pro načtení knih z knihovny
   async loadLibraryBooks() {
     this.myLibraryBooks = await this.storageService.getBooks();
     console.log('Knihy v knihovne:', this.myLibraryBooks);
   }
 
-  // Nová metoda pro kontrolu, zda je kniha v knihovně
   isBookInLibrary(book: any): boolean {
     return this.myLibraryBooks.some(libraryBook => 
       libraryBook.title === book.title && 
@@ -70,7 +68,7 @@ export class Tab1Page implements OnInit {
 
   onSearchChange(event: any) {
     this.searchTerm = event.detail.value;
-    if (this.searchTerm.length > 2) { // Přidána podmínka minimální délky
+    if (this.searchTerm.length > 2) {
       this.searchBooks();
     }
   }
