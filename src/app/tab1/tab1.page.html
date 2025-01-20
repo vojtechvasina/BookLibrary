@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-title>
       Databáze knih
     </ion-title>
@@ -8,7 +8,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
-    <ion-toolbar>
+    <ion-toolbar color="dark">
       <ion-title size="large">Databáze knih</ion-title>
     </ion-toolbar>
   </ion-header>
@@ -23,7 +23,7 @@
     placeholder="Zadejte název knihy, autora nebo ISBN">
   </ion-input>
 
-  <ion-progress-bar type="indeterminate" *ngIf="isLoading"></ion-progress-bar>
+  <ion-progress-bar color="medium" type="indeterminate" *ngIf="isLoading"></ion-progress-bar>
 
   <ion-list>
     <ion-item *ngFor="let book of books">
@@ -35,12 +35,12 @@
         <h3>{{ book.author_name?.join(', ') }}</h3>
       </ion-label>
 
-      <ion-button *ngIf="!isBookInLibrary(book)" slot="end" (click)="addToLibrary(book)">
+      <ion-button class="addButton" color="dark" *ngIf="!isBookInLibrary(book)" slot="end" (click)="addToLibrary(book)">
         <ion-icon name="add"></ion-icon>
         Přidat
       </ion-button>
       
-      <ion-card *ngIf="isBookInLibrary(book)" slot="end">
+      <ion-card class="book-added" *ngIf="isBookInLibrary(book)" slot="end">
         <ion-card-content>
           <ion-icon name="checkmark-outline"></ion-icon>
             Přidáno
