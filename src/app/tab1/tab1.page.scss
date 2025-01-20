@@ -1,6 +1,10 @@
 .search-bar {
-    margin: 20px 20px;
-    --highlight-color: black;
+  --highlight-color: black;
+  margin-top: 10px;
+}
+
+.search-bar-item {
+  margin: 12px 12px;
 }
 
 .book-added {

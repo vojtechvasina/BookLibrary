@@ -13,15 +13,17 @@
     </ion-toolbar>
   </ion-header>
   
-  <ion-input
-    class="search-bar"
-    [(ngModel)]="searchTerm"
-    (ionChange)="onSearchChange($event)"
-    label="Vyhledávání" 
-    label-placement="floating" 
-    fill="outline"
-    placeholder="Zadejte název knihy, autora nebo ISBN">
-  </ion-input>
+  <ion-item class="search-bar-item">
+    <ion-input
+      class="search-bar"
+      [(ngModel)]="searchTerm"
+      (ionChange)="onSearchChange($event)"
+      label="Vyhledávání" 
+      label-placement="floating" 
+      fill="outline"
+      placeholder="Zadejte název knihy, autora nebo ISBN">
+    </ion-input>
+  </ion-item>
 
   <ion-progress-bar color="medium" type="indeterminate" *ngIf="isLoading"></ion-progress-bar>
 
